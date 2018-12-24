@@ -1,0 +1,37 @@
+Dec 23 19:33:51.652 HYPERVISOR: Release 0.2.18-amd64/Linux (tag 2018033112)
+Dec 23 19:33:51.652 HYPERVISOR: Started on IP = 127.0.0.1, TCP port = 57943.
+Dec 23 19:33:51.662 HYPERVISOR: exec_cmd: hypervisor version 
+Dec 23 19:33:51.663 HYPERVISOR: exec_cmd: hypervisor working_dir /home/nc/GNS3/projects/ARA_Project/project-files/dynamips 
+Dec 23 19:33:51.663 GENERAL: working_dir=/home/nc/GNS3/projects/ARA_Project/project-files/dynamips
+Dec 23 19:33:51.663 HYPERVISOR: exec_cmd: hypervisor working_dir /home/nc/GNS3/projects/ARA_Project/project-files/dynamips/59408c5e-f163-4373-9ddf-2c65a552dcb1 
+Dec 23 19:33:51.663 GENERAL: working_dir=/home/nc/GNS3/projects/ARA_Project/project-files/dynamips/59408c5e-f163-4373-9ddf-2c65a552dcb1
+Dec 23 19:33:51.663 HYPERVISOR: exec_cmd: vm create BackupSIPProxy 10 c3725 
+Dec 23 19:33:51.663 VM: VM BackupSIPProxy created.
+Dec 23 19:33:51.663 HYPERVISOR: exec_cmd: vm set_con_tcp_port BackupSIPProxy 5016 
+Dec 23 19:33:51.663 HYPERVISOR: exec_cmd: c3725 get_mac_addr BackupSIPProxy 
+Dec 23 19:33:51.664 HYPERVISOR: exec_cmd: vm slot_add_binding BackupSIPProxy 0 48 WIC-1T 
+Dec 23 19:33:51.664 HYPERVISOR: exec_cmd: vm set_disk0 BackupSIPProxy 0 
+Dec 23 19:33:51.664 HYPERVISOR: exec_cmd: vm set_ios BackupSIPProxy /home/nc/GNS3/images/IOS/c3725-advipservicesk9-mz.124-21.image 
+Dec 23 19:33:51.665 HYPERVISOR: exec_cmd: vm get_status BackupSIPProxy 
+Dec 23 19:33:51.665 HYPERVISOR: exec_cmd: vm set_idle_pc BackupSIPProxy 0x60a68e70 
+Dec 23 19:33:51.665 HYPERVISOR: exec_cmd: vm set_nvram BackupSIPProxy 256 
+Dec 23 19:33:51.665 HYPERVISOR: exec_cmd: vm slot_add_binding BackupSIPProxy 0 32 WIC-1T 
+Dec 23 19:33:51.665 HYPERVISOR: exec_cmd: vm get_status BackupSIPProxy 
+Dec 23 19:33:51.665 HYPERVISOR: exec_cmd: vm slot_add_binding BackupSIPProxy 1 0 NM-1FE-TX 
+Dec 23 19:33:51.666 HYPERVISOR: exec_cmd: vm get_status BackupSIPProxy 
+Dec 23 19:33:51.666 HYPERVISOR: exec_cmd: vm slot_add_binding BackupSIPProxy 2 0 NM-16ESW 
+Dec 23 19:33:51.666 HYPERVISOR: exec_cmd: c3725 set_mac_addr BackupSIPProxy c20a.0b91.0000 
+Dec 23 19:33:51.666 HYPERVISOR: exec_cmd: vm slot_add_binding BackupSIPProxy 0 16 WIC-1T 
+Dec 23 19:33:52.264 HYPERVISOR: exec_cmd: nio create_udp udp-ecea7cfe-4a64-4c33-9306-d838378a14ce 10012 127.0.0.1 10013 
+Dec 23 19:33:52.284 HYPERVISOR: exec_cmd: vm slot_add_nio_binding BackupSIPProxy 0 0 udp-ecea7cfe-4a64-4c33-9306-d838378a14ce 
+Dec 23 19:33:52.284 HYPERVISOR: exec_cmd: vm get_status BackupSIPProxy 
+Dec 23 20:55:07.741 HYPERVISOR: exec_cmd: vm set_ios BackupSIPProxy /home/nc/GNS3/images/IOS/c3725-advipservicesk9-mz.124-21.image 
+Dec 23 20:56:23.490 HYPERVISOR: exec_cmd: vm get_status BackupSIPProxy 
+Dec 23 20:56:23.492 HYPERVISOR: exec_cmd: vm extract_config BackupSIPProxy 
+Dec 23 20:56:23.758 HYPERVISOR: exec_cmd: vm get_status BackupSIPProxy 
+Dec 23 20:56:23.758 HYPERVISOR: exec_cmd: vm extract_config BackupSIPProxy 
+Dec 23 20:56:23.758 HYPERVISOR: exec_cmd: vm delete BackupSIPProxy 
+Dec 23 20:56:23.758 VM: VM BackupSIPProxy destroyed.
+Dec 23 20:56:23.760 HYPERVISOR: exec_cmd: hypervisor stop 
+Dec 23 20:56:24.122 HYPERVISOR: Stopped.
+Dec 23 20:56:24.122 GENERAL: reset done.

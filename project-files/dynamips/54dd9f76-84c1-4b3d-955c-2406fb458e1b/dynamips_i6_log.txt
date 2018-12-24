@@ -1,0 +1,14 @@
+Dec 23 19:33:51.626 HYPERVISOR: Release 0.2.18-amd64/Linux (tag 2018033112)
+Dec 23 19:33:51.626 HYPERVISOR: Started on IP = 127.0.0.1, TCP port = 43481.
+Dec 23 19:33:51.636 HYPERVISOR: exec_cmd: hypervisor version 
+Dec 23 19:33:51.636 HYPERVISOR: exec_cmd: hypervisor working_dir /home/nc/GNS3/projects/ARA_Project/project-files/dynamips 
+Dec 23 19:33:51.636 GENERAL: working_dir=/home/nc/GNS3/projects/ARA_Project/project-files/dynamips
+Dec 23 19:33:51.637 HYPERVISOR: exec_cmd: ethsw create netA1 
+Dec 23 19:33:52.455 HYPERVISOR: exec_cmd: nio create_udp udp-b34c044a-9ed8-4a2c-b804-d881dabcd496 10019 127.0.0.1 10018 
+Dec 23 19:33:52.455 HYPERVISOR: exec_cmd: ethsw add_nio netA1 udp-b34c044a-9ed8-4a2c-b804-d881dabcd496 
+Dec 23 19:33:52.468 HYPERVISOR: exec_cmd: ethsw set_access_port netA1 udp-b34c044a-9ed8-4a2c-b804-d881dabcd496 1 
+Dec 23 20:55:08.352 HYPERVISOR: exec_cmd: ethsw set_access_port netA1 udp-b34c044a-9ed8-4a2c-b804-d881dabcd496 1 
+Dec 23 20:56:23.668 HYPERVISOR: exec_cmd: ethsw delete netA1 
+Dec 23 20:56:23.687 HYPERVISOR: exec_cmd: hypervisor stop 
+Dec 23 20:56:24.102 HYPERVISOR: Stopped.
+Dec 23 20:56:24.102 GENERAL: reset done.
