@@ -6,7 +6,7 @@ end
 #Oeiras
 configure terminal
 int Loopback0
-ip address 192.168.2.3 255.255.255.255
+ip address 192.168.2.4 255.255.255.255
 ip ospf 1 area 0
 no shutdown
 end
@@ -15,7 +15,7 @@ write
 #Aveiro
 configure terminal
 int Loopback0
-ip address 192.168.2.4 255.255.255.255
+ip address 192.168.2.3 255.255.255.255
 ip ospf 1 area 0
 no shutdown
 end
@@ -69,6 +69,13 @@ int f1/0
 mpls ip
 end
 
+configure terminal
+no mpls ip
+int f0/0
+no mpls ip
+int f0/1
+no mpls ip
+
 #Porto
 configure terminal
 mpls ip
@@ -89,6 +96,9 @@ end
 configure terminal
 mpls ip
 int f0/0
+mpls ip
+int f0/1
+int f0/1.2
 mpls ip
 end
 
@@ -104,11 +114,13 @@ int f0/1
 int f0/1.1
 encapsulation dot1Q 1
 ip address 192.168.1.25 255.255.255.252
+ip address 110.1.1.129 255.255.255.128 secondary
 no ip ospf 1 area 0
 no shutdown
 int f0/1.2
 encapsulation dot1Q 2
 ip address 192.168.1.29 255.255.255.252
+ip address 111.1.1.129 255.255.255.128 secondary
 ip ospf 1 area 0
 no shutdown
 end
@@ -116,6 +128,9 @@ end
 #VPN A1
 #EmpA1 - aveiro
 configure terminal
+router ospf 1
+no network 110.1.1.0 0.0.0.255 area 0
+exit
 ip vrf VPN-1
 rd 200:1
 route-target export 200:1
@@ -123,7 +138,7 @@ route-target import 200:1
 exit
 int f0/1
 ip vrf forwarding VPN-1
-ip address 110.1.1.1 255.255.255.0
+ip address 110.1.1.1 255.255.255.128
 end
 write
 
@@ -137,7 +152,7 @@ exit
 int f0/1
 int f0/1.1
 ip vrf forwarding VPN-1
-ip address 192.168.1.25 255.255.255.248
+ip address 110.1.1.129 255.255.255.128
 end
 write
 
@@ -146,11 +161,11 @@ write
 configure terminal
 router bgp 1000
 bgp router-id 5.5.5.5
-neighbor 192.168.2.3 remote-as 1000
-neighbor 192.168.2.3 update-source Loopback0
+neighbor 192.168.2.4 remote-as 1000
+neighbor 192.168.2.4 update-source Loopback0
 address-family vpnv4 
-neighbor 192.168.2.3 activate
-neighbor 192.168.2.3 send-community both
+neighbor 192.168.2.4 activate
+neighbor 192.168.2.4 send-community both
 exit
 address-family ipv4 vrf VPN-1
 redistribute connected
@@ -160,7 +175,7 @@ end
 #EmpA1 oeiras
 configure terminal
 router bgp 1000
-bgp router-id 3.3.3.3
+bgp router-id 4.4.4.4
 neighbor 192.168.2.5 remote-as 1000
 neighbor 192.168.2.5 update-source Loopback0
 address-family vpnv4
@@ -171,38 +186,36 @@ address-family ipv4 vrf VPN-1
 redistribute connected
 end
 
-#other bgp // not needed
-configure terminal
-router bgp 1000
-no neighbor 192.168.2.5 remote-as 1000
-no neighbor 192.168.2.5 update-source Loopback0
-no neighbor 192.168.2.3 remote-as 1000
-no neighbor 192.168.2.3 update-source Loopback0
-address-family vpnv4 
-neighbor 192.168.2.3 activate
-neighbor 192.168.2.3 send-community both
-neighbor 192.168.2.5 activate
-neighbor 192.168.2.5 send-community both
-exit
-address-family ipv4 vrf VPN-1
-redistribute connected
-end
 
 #default routes
 #EmpA1
 configure terminal
-ip route vrf VPN-1 0.0.0.0 0.0.0.0 192.168.2.4 global
-ip route 110.1.1.0 255.255.255.0 FastEthernet0/1
+ip route vrf VPN-1 0.0.0.0 0.0.0.0 192.168.2.3 global
+ip route 110.1.1.0 255.255.255.128 FastEthernet0/1
 router ospf 1
 redistribute static subnets
+end
+
+configure terminal
+no ip route vrf VPN-1 0.0.0.0 0.0.0.0 192.168.2.3 global
+no ip route 110.1.1.0 255.255.255.0 FastEthernet0/1
+router ospf 1
+no redistribute static subnets
 end
 
 #Oeiras VPN-1
 configure terminal
 ip route vrf VPN-1 0.0.0.0 0.0.0.0 192.168.2.2 global
-ip route 192.168.1.24 255.255.255.252 FastEthernet0/1.1
+ip route 110.1.1.128 255.255.255.128 FastEthernet0/1.1
 router ospf 1
 redistribute static subnets
+end
+
+configure terminal
+no ip route vrf VPN-1 0.0.0.0 0.0.0.0 192.168.2.2 global
+no ip route 110.1.1.128 255.255.255.128 FastEthernet0/1.1
+router ospf 1
+no redistribute static subnets
 end
 
 ##BGP needs to get this static vpn address
@@ -213,106 +226,76 @@ redistribute ospf 1 match external 2
 end
 write
 
-///NOT WORKING///
 ############
 ##MPLS-TE###
 ############
 #Lisboa
 configure terminal
-mpls traffic-eng tunnels 
+mpls traffic-eng tunnel 
 int f0/1
-mpls traffic-eng tunnels 
+mpls traffic-eng tunnel
 int f2/0
-mpls traffic-eng tunnels
+mpls traffic-eng tunnel
 end
 
 configure terminal
-no mpls traffic-eng tunnels 
+no mpls traffic-eng tunnel 
 int f0/1
-no mpls traffic-eng tunnels 
+no mpls traffic-eng tunnel 
 int f2/0
-no mpls traffic-eng tunnels
-end
-
-#Porto
-configure terminal
-mpls traffic-eng tunnels 
-int f0/1
-mpls traffic-eng tunnels
-end
-
-configure terminal
-no mpls traffic-eng tunnels 
-int f0/1
-no mpls traffic-eng tunnels
+no mpls traffic-eng tunnel
 end
 
 #Oeiras
 configure terminal
-mpls traffic-eng tunnels 
+mpls traffic-eng tunnel
 int f0/0
-mpls traffic-eng tunnels
+mpls traffic-eng tunnel
 int f0/1
-mpls traffic-eng tunnels
+int f0/1.2
+mpls traffic-eng tunnel
 end
 
 configure terminal
-no mpls traffic-eng tunnels 
+no mpls traffic-eng tunnel 
 int f0/0
-no mpls traffic-eng tunnels
-int f0/1
-no mpls traffic-eng tunnels
+no mpls traffic-eng tunnel
+int f0/1.2
+no mpls traffic-eng tunnel
 end
 
 #Aveiro
 configure terminal
-mpls traffic-eng tunnels 
+mpls traffic-eng tunnel
 int f0/0
-mpls traffic-eng tunnels
-int f0/1
-mpls traffic-eng tunnels
+mpls traffic-eng tunnel
 int f1/0
-mpls traffic-eng tunnels
+mpls traffic-eng tunnel
 end
 
 configure terminal
-no mpls traffic-eng tunnels 
+no mpls traffic-eng tunnel 
 int f0/0
-no mpls traffic-eng tunnels
-int f0/1
-no mpls traffic-eng tunnels
+no mpls traffic-eng tunnel
 int f1/0
-no mpls traffic-eng tunnels
-end
-
-#EmpA1
-configure terminal
-mpls traffic-eng tunnels 
-int f0/0
-mpls traffic-eng tunnels
-end
-
-configure terminal
-no mpls traffic-eng tunnels 
-int f0/0
-no mpls traffic-eng tunnels
+no mpls traffic-eng tunnel
 end
 
 #EmpB1
 configure terminal
-mpls traffic-eng tunnels 
+mpls traffic-eng tunnel
 int f0/0
-mpls traffic-eng tunnels
+mpls traffic-eng tunnel
 int f0/1
-mpls traffic-eng tunnels
+mpls traffic-eng tunnel
 end
 
 configure terminal
-no mpls traffic-eng tunnels 
+no mpls traffic-eng tunnel
 int f0/0
-no mpls traffic-eng tunnels
+no mpls traffic-eng tunnel
 int f0/1
-no mpls traffic-eng tunnels
+no mpls traffic-eng tunnel
 end
 
 #ATIVATE IN OSPF1
@@ -329,98 +312,71 @@ no mpls traffic-eng router-id Loopback0
 end
 
 #Reiniciar OSPF 1
-clear ip ospf process
+clear ip ospf 1 process
 
 #Ativae RSVP em cada interface fisica
 #Oeiras
 configure terminal
 int f0/0
-ip rsvp bandwidth 250000 40000
+ip rsvp bandwidth 250000 250000 
 int f0/1
-ip rsvp bandwidth 250000 40000
+int f0/1.2
+ip rsvp bandwidth 250000 250000 
 end
 
 configure terminal
 int f0/0
-no ip rsvp bandwidth 250000 40000
-int f0/1
-no ip rsvp bandwidth 250000 40000
+no ip rsvp bandwidth 250000 250000 
+int f0/1.2
+no ip rsvp bandwidth 250000 250000 
 end
 
 #Aveiro
 configure terminal
 int f0/0
-ip rsvp bandwidth 250000 40000
-int f0/1
-ip rsvp bandwidth 250000 40000
+ip rsvp bandwidth 250000 250000 
 int f1/0
-ip rsvp bandwidth 250000 40000
+ip rsvp bandwidth 250000 250000 
 end
 
 configure terminal
 int f0/0
-no ip rsvp bandwidth 250000 40000
-int f0/1
-no ip rsvp bandwidth 250000 40000
+no ip rsvp bandwidth 250000 250000 
 int f1/0
-no ip rsvp bandwidth 250000 40000
+no ip rsvp bandwidth 250000 250000 
 end
 
 #Lisboa
 configure terminal
 int f2/0
-ip rsvp bandwidth 250000 40000
+ip rsvp bandwidth 250000 250000 
 int f0/1
-ip rsvp bandwidth 250000 40000
+ip rsvp bandwidth 250000 250000 
 end
 
 configure terminal
 int f2/0
-no ip rsvp bandwidth 250000 40000
+no ip rsvp bandwidth 250000 250000 
 int f0/1
-no ip rsvp bandwidth 250000 40000
-end
-
-
-
-#Porto
-configure terminal
-int f0/1
-ip rsvp bandwidth 250000 40000
-end
-
-configure terminal
-int f0/1
-no ip rsvp bandwidth 250000 40000
-end
-
-#EmpA1
-configure terminal
-int f0/0
-ip rsvp bandwidth 250000 40000
-end
-
-configure terminal
-int f0/0
-no ip rsvp bandwidth 250000 40000
+no ip rsvp bandwidth 250000 250000 
 end
 
 #EmpB1
 configure terminal
 int f0/0
-ip rsvp bandwidth 250000 40000
+ip rsvp bandwidth 250000 250000 
 int f0/1
-ip rsvp bandwidth 250000 40000
+ip rsvp bandwidth 250000 250000 
 end
 
 conf terminal
 int f0/0
-no ip rsvp bandwidth 250000 40000
+no ip rsvp bandwidth 250000 250000 
 int f0/1
-no ip rsvp bandwidth 250000 40000
+no ip rsvp bandwidth 250000 250000 
 
 ##DOIS TUNEIS BIDIRECIONAIS ENTRE OEIRAS E EMPB1
-#Oeiras
+#Oeiras static
 configure terminal
 int tunnel 1
 ip unnumbered Loopback0
@@ -428,55 +384,71 @@ tunnel destination 192.168.2.6
 tunnel mode mpls traffic-eng
 tunnel mpls traffic-eng bandwidth 30720
 tunnel mpls traffic-eng path-option 1 dynamic
+no shutdown
 int tunnel 2
 ip unnumbered Loopback0
 tunnel destination 192.168.2.6
 tunnel mode mpls traffic-eng
 tunnel mpls traffic-eng bandwidth 30720
 tunnel mpls traffic-eng path-option 1 dynamic
+no shutdown
 end
 
 #EmpB1
 configure terminal
 int tunnel 1
 ip unnumbered Loopback0
-tunnel destination 192.168.2.3
+tunnel destination 192.168.2.4
 tunnel mode mpls traffic-eng
 tunnel mpls traffic-eng bandwidth 30720
 tunnel mpls traffic-eng path-option 1 dynamic
+no shutdown
 int tunnel 2
 ip unnumbered Loopback0
-tunnel destination 192.168.2.3
+tunnel destination 192.168.2.4
 tunnel mode mpls traffic-eng
 tunnel mpls traffic-eng bandwidth 30720
 tunnel mpls traffic-eng path-option 1 dynamic
+no shutdown
 end
 
 configure terminal
 no int tunnel 1
 no int tunnel 2
-
-#static routes
-#Oeiras
-configure terminal
-ip route 111.1.1.0 255.255.255.0 tunnel1
-ip route 111.1.1.0 255.255.255.0 tunnel2
 end
 
-configure terminal
-no ip route 111.1.1.0 255.255.255.0 tunnel1
-no ip route 111.1.1.0 255.255.255.0 tunnel2
-end
-
+#Route-maps
+#15.1!!!!!!!!!!!!!!
 #EmpB1
-configure terminal
-ip route 192.168.1.27 255.255.255.255 tunnel1
-ip route 192.168.1.27 255.255.255.255 tunnel2
+conf terminal
+access-list 100 permit ip 111.1.1.0 0.0.0.255 10.0.0.12 0.0.0.3
+route-map routeTs permit 10
+match ip address 100
+set interface Tunnel 1 Tunnel 2
+exit
+int f0/1
+ip policy route-map routeTs
 end
 
-configure terminal
-no ip route 192.168.1.27 255.255.255.255 tunnel1
-no ip route 192.168.1.27 255.255.255.255 tunnel2
+#Oeiras
+conf terminal
+access-list 100 permit ip 10.0.0.12 0.0.0.3 111.1.1.0 0.0.0.255
+route-map routeTs permit 10
+match ip address 100
+set interface Tunnel2 Tunnel1
+exit
+int f0/1.2
+ip policy route-map routeTs
 end
+
+
+conf terminal
+int f0/1
+no ip policy route-map routeTs
+int f0/1.2
+no ip policy route-map routeTs
+exit
+no access-list 100
+no route-map routeTs
 
 
