@@ -1,0 +1,32 @@
+Jan 04 18:34:23.095 HYPERVISOR: Release 0.2.17-x86/Windows (tag 2017072410)
+Jan 04 18:34:23.096 HYPERVISOR: Started on IP = 127.0.0.1, TCP port = 56777.
+Jan 04 18:34:23.574 HYPERVISOR: exec_cmd: hypervisor version 
+Jan 04 18:34:23.574 HYPERVISOR: exec_cmd: hypervisor working_dir C:\Users\tonye\Documents\ECT\Ano4\ARA\Project\ARA-Project\project-files\dynamips 
+Jan 04 18:34:23.574 GENERAL: working_dir=C:\Users\tonye\Documents\ECT\Ano4\ARA\Project\ARA-Project\project-files\dynamips
+Jan 04 18:34:23.575 HYPERVISOR: exec_cmd: hypervisor working_dir C:\Users\tonye\Documents\ECT\Ano4\ARA\Project\ARA-Project\project-files\dynamips\41c1007f-fd50-4ec7-be37-39f889ae2e76 
+Jan 04 18:34:23.582 GENERAL: working_dir=C:\Users\tonye\Documents\ECT\Ano4\ARA\Project\ARA-Project\project-files\dynamips\41c1007f-fd50-4ec7-be37-39f889ae2e76
+Jan 04 18:34:23.583 HYPERVISOR: exec_cmd: vm create Oeiras 9 c3725 
+Jan 04 18:34:23.585 VM: VM Oeiras created.
+Jan 04 18:34:23.586 HYPERVISOR: exec_cmd: vm set_con_tcp_port Oeiras 5017 
+Jan 04 18:34:23.586 HYPERVISOR: exec_cmd: c3725 get_mac_addr Oeiras 
+Jan 04 18:34:23.587 HYPERVISOR: exec_cmd: vm set_disk0 Oeiras 0 
+Jan 04 18:34:23.587 HYPERVISOR: exec_cmd: vm set_exec_area Oeiras 64 
+Jan 04 18:34:23.588 HYPERVISOR: exec_cmd: vm get_status Oeiras 
+Jan 04 18:34:23.588 HYPERVISOR: exec_cmd: vm set_idle_pc Oeiras 0x60a68e70 
+Jan 04 18:34:23.590 HYPERVISOR: exec_cmd: vm set_ios Oeiras C:/Users/tonye/GNS3/images/IOS/c3725-advipservicesk9-mz.124-21.image 
+Jan 04 18:34:23.590 HYPERVISOR: exec_cmd: c3725 set_mac_addr Oeiras c209.0b65.0000 
+Jan 04 18:34:23.591 HYPERVISOR: exec_cmd: vm set_nvram Oeiras 256 
+Jan 04 18:34:23.591 HYPERVISOR: exec_cmd: vm get_status Oeiras 
+Jan 04 18:34:23.591 HYPERVISOR: exec_cmd: vm slot_add_binding Oeiras 1 0 NM-1FE-TX 
+Jan 04 18:34:23.592 HYPERVISOR: exec_cmd: vm get_status Oeiras 
+Jan 04 18:34:23.592 HYPERVISOR: exec_cmd: vm slot_add_binding Oeiras 2 0 NM-16ESW 
+Jan 04 18:34:23.593 HYPERVISOR: exec_cmd: vm slot_add_binding Oeiras 0 16 WIC-1T 
+Jan 04 18:34:23.593 HYPERVISOR: exec_cmd: vm slot_add_binding Oeiras 0 32 WIC-1T 
+Jan 04 18:34:23.594 HYPERVISOR: exec_cmd: vm slot_add_binding Oeiras 0 48 WIC-1T 
+Jan 04 18:34:28.041 HYPERVISOR: exec_cmd: vm get_status Oeiras 
+Jan 04 18:34:28.049 HYPERVISOR: exec_cmd: vm extract_config Oeiras 
+Jan 04 18:34:28.053 HYPERVISOR: exec_cmd: vm delete Oeiras 
+Jan 04 18:34:28.053 VM: VM Oeiras destroyed.
+Jan 04 18:34:28.084 HYPERVISOR: exec_cmd: hypervisor stop 
+Jan 04 18:34:28.584 HYPERVISOR: Stopped.
+Jan 04 18:34:28.584 GENERAL: reset done.

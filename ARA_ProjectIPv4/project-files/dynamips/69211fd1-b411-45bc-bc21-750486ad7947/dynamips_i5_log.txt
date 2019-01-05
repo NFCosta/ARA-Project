@@ -1,0 +1,10 @@
+Jan 04 18:34:19.822 HYPERVISOR: Release 0.2.17-x86/Windows (tag 2017072410)
+Jan 04 18:34:19.823 HYPERVISOR: Started on IP = 127.0.0.1, TCP port = 56756.
+Jan 04 18:34:20.304 HYPERVISOR: exec_cmd: hypervisor version 
+Jan 04 18:34:20.305 HYPERVISOR: exec_cmd: hypervisor working_dir C:\Users\tonye\Documents\ECT\Ano4\ARA\Project\ARA-Project\project-files\dynamips 
+Jan 04 18:34:20.305 GENERAL: working_dir=C:\Users\tonye\Documents\ECT\Ano4\ARA\Project\ARA-Project\project-files\dynamips
+Jan 04 18:34:20.305 HYPERVISOR: exec_cmd: ethsw create netM1 
+Jan 04 18:34:28.037 HYPERVISOR: exec_cmd: ethsw delete netM1 
+Jan 04 18:34:28.043 HYPERVISOR: exec_cmd: hypervisor stop 
+Jan 04 18:34:28.312 HYPERVISOR: Stopped.
+Jan 04 18:34:28.312 GENERAL: reset done.
